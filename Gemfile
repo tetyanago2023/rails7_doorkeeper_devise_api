@@ -69,3 +69,5 @@ end
 gem "devise", "~> 4.9"
 
 gem "doorkeeper", "~> 5.6"
+
+gem "rack-cors", "~> 2.0"
