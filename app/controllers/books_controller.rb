@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :is_admin?
 
   # GET /books or /books.json
   def index
@@ -67,4 +69,13 @@ class BooksController < ApplicationController
     def book_params
       params.require(:book).permit(:title, :body)
     end
+
+  def is_admin?
+    return if current_user&.admin?
+
+    respond_to do |format|
+      format.json { render json: { error: 'You are not authorized to access this page.' }, status: :unauthorized }
+      format.html { redirect_to root_path, notice: 'You are not authorized to access this page.' }
+    end
+  end
 end

@@ -7,7 +7,8 @@ module Api
         include DoorkeeperRegisterable
 
         def create
-          client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
+          # client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
+          client_app = Doorkeeper::Application.find_by(uid: user_params[:client_id])
           unless client_app
             return render json: { error: I18n.t('doorkeeper.errors.messages.invalid_client') },
                           status: :unauthorized
